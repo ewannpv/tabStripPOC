@@ -122,7 +122,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     snapshot.reconfigureItems([item])
     layout.needUpdate = true
     diffableDataSource.apply(snapshot, animatingDifferences: false)
-
+    
   }
   
   func replaceItem(_ oldItem: TabStripItem?, withItem newItem: TabStripItem?) {
@@ -156,12 +156,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
   // MARK: - TabStripNewTabButtonDelegate
   
   func newTabButtonTapped() {
-    if ((newTabCount % 3) != 0) {
-      mutator?.addNewItem(item: TabSwitcherItem(title: "Tab Strip \(newTabCount)", symbolName: ""))
-    } else {
-      mutator?.addNewItem(item: TabGroupItem(title: "Group \(newTabCount)"))
-    }
-    
+    mutator?.addNewItem(item: TabSwitcherItem(title: "Tab Strip \(newTabCount)", symbolName: ""))
     newTabCount += 1
   }
   // MARK: - Private
@@ -297,4 +292,29 @@ extension TabStripViewController : UICollectionViewDelegateFlowLayout {
   ) -> CGSize {
     return layout.calculcateCellSize(indexPath: indexPath)
   }
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    contextMenuConfigurationForItemAt indexPath: IndexPath,
+    point: CGPoint
+  ) -> UIContextMenuConfiguration {
+    
+    guard let item = diffableDataSource?.itemIdentifier(for: indexPath) else { return UIContextMenuConfiguration() }
+    
+    let groupAction =
+    UIAction(title: NSLocalizedString("Group", comment: ""),
+             image: UIImage(systemName: "arrow.up.square")) { action in
+      self.mutator?.groupItem(item)
+    }
+    let unGroupAction =
+    UIAction(title: NSLocalizedString("DuplicateTitle", comment: ""),
+             image: UIImage(systemName: "plus.square.on.square")) { action in
+      // TODO
+    }
+    
+    return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+      return UIMenu(title: "", children: [groupAction, unGroupAction])
+    }
+  }
+  
 }

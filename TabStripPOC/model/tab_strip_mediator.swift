@@ -8,6 +8,8 @@
 class TabStripMediator: TabStripMutator {
     var items : [TabStripItem]?
     var consumer: TabStripConsumer?
+  
+   private var groupItem : TabStripItem?
 
     init() {
         items = []
@@ -36,4 +38,17 @@ class TabStripMediator: TabStripMutator {
             consumer?.populate(items: items, selectedItem: item)
         }
     }
+  
+  func groupItem(_ item: TabStripItem) {
+    if (groupItem == nil) {
+      groupItem = TabGroupItem(title: "Group")
+      items?.append(groupItem!)
+    }
+    let groupItemIndex = items?.firstIndex(of: groupItem!)!
+    let itemIndex = (items?.firstIndex(of: item))!
+    items?.remove(at: itemIndex)
+    items?.insert(item, at: groupItemIndex!)
+    consumer?.populate(items: items, selectedItem: item)
+  }
+  
 }
