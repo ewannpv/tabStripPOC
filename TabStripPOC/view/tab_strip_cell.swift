@@ -8,7 +8,7 @@
 import UIKit
 
 class TabStripCell: UICollectionViewCell {
-
+  var type: TabStripItemType = TabStripItemType.TabSwitcherItem
     var delegate: TabStripCellDelegate?
     
     // MARK: - Accessor

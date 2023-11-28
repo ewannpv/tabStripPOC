@@ -23,16 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "ECE3F6A7-80F1-4B53-B5DC-94AA65A6F6DE"
+            uuid = "BB283EC2-169F-473D-879D-1D4019F29A43"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TabStripPOC/controller/tab_strip_view_controller.swift"
+            filePath = "TabStripPOC/layout/tab_strip_flow_layout.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "collectionView(_:itemsForBeginning:at:)"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "calculateTabCellSize()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0452957-2F66-4393-A183-DA63101DF47F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TabStripPOC/layout/tab_strip_flow_layout.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "prepare()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

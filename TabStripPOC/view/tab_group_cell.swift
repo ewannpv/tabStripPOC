@@ -8,11 +8,12 @@
 import UIKit
 
 class TabGroupCell: TabStripCell {
+  
     private let titleLabel : UILabel = UILabel()
         
     override init(frame: CGRect) {
         super.init(frame:frame)
-        
+        type = TabStripItemType.TabGroupItem
         layer.borderColor = UIColor.orange.cgColor
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
         layer.borderWidth = 1;
@@ -52,4 +53,14 @@ class TabGroupCell: TabStripCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
     }
+  
+  // MARK: - Public
+
+  public static func estimatedWidth(_ text: String) -> CGFloat {
+      let label = UILabel(frame: .zero)
+      label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+      label.text = text
+    return label.sizeThatFits(.zero).width + (2 * TabStripConstants.groupItem.titleInset)
+  }
+  
 }
