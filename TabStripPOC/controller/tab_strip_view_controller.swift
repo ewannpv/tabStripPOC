@@ -90,9 +90,10 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     var snapshot = NSDiffableDataSourceSnapshot<Section, TabStripItem>()
     snapshot.appendSections([.tabs])
     snapshot.appendItems(items, toSection: .tabs)
+    snapshot.reconfigureItems(items)
     layout.needUpdate = true
     diffableDataSource?.apply(snapshot, animatingDifferences: false)
-    
+    layout.needUpdate = false
     guard let selectedItem = selectedItem, let diffableDataSource = diffableDataSource else {
       return
     }
@@ -122,7 +123,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     snapshot.reconfigureItems([item])
     layout.needUpdate = true
     diffableDataSource.apply(snapshot, animatingDifferences: false)
-    
+    layout.needUpdate = false
   }
   
   func replaceItem(_ oldItem: TabStripItem?, withItem newItem: TabStripItem?) {
@@ -136,6 +137,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     snapshot.deleteItems([oldItem])
     layout.needUpdate = true
     diffableDataSource.apply(snapshot, animatingDifferences: false)
+    layout.needUpdate = false
   }
   
   // MARK: - TabStripCellDelegate
@@ -166,6 +168,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     tabSwitcherCellRegistration = UICollectionView.CellRegistration<TabCell, TabSwitcherItem> {
       (cell, indexPath, item) in
       cell.setTitle(item.title)
+      cell.setGrouped(item.grouped)
       //cell.setFaviconImage(UIImage(systemName: item.symbolName))
       cell.delegate = self
     }
@@ -197,10 +200,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
         item: itemIdentifier as? TabSwitcherItem)
     }
   }
-  
-  func configureNewTabButton() {
-    
-  }
+
 }
 
 // MARK: - UICollectionViewDragDelegate
@@ -282,7 +282,11 @@ extension TabStripViewController : UICollectionViewDelegateFlowLayout {
     guard let item = diffableDataSource?.itemIdentifier(for: indexPath) else {
       return
     }
-    selectItem(item)
+    if item.type == TabStripItemType.TabGroupItem {
+      mutator?.updateGroupItemVisibility()
+    } else {
+      selectItem(item)
+    }
   }
   
   func collectionView(
@@ -297,14 +301,14 @@ extension TabStripViewController : UICollectionViewDelegateFlowLayout {
     _ collectionView: UICollectionView,
     contextMenuConfigurationForItemAt indexPath: IndexPath,
     point: CGPoint
-  ) -> UIContextMenuConfiguration {
+  ) -> UIContextMenuConfiguration? {
     
     guard let item = diffableDataSource?.itemIdentifier(for: indexPath) else { return UIContextMenuConfiguration() }
     
     let groupAction =
     UIAction(title: NSLocalizedString("Group", comment: ""),
              image: UIImage(systemName: "arrow.up.square")) { action in
-      self.mutator?.groupItem(item)
+      self.mutator?.groupItem(item as! TabSwitcherItem)
     }
     let unGroupAction =
     UIAction(title: NSLocalizedString("DuplicateTitle", comment: ""),

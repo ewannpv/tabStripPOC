@@ -22,7 +22,9 @@ protocol TabStripMutator {
     /// Tells the receiver to move the `item` at the given `destinationIndex`.
     func moveItem(_ item: TabStripItem, destinationIndex: Int)
   
-  func groupItem(_ item: TabStripItem)
+  func groupItem(_ item: TabSwitcherItem)
+  
+  func updateGroupItemVisibility()
 
 }
 

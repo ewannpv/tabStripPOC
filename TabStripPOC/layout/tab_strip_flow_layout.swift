@@ -87,8 +87,6 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
   // MARK: - Private
 
   private func calculateTabCellSize() {
-    needUpdate = false
-
     guard let collectionView = self.collectionView, let snapshot = dataSource?.snapshot() else {return }
     
     var groupCellWidthSum : CGFloat = 0

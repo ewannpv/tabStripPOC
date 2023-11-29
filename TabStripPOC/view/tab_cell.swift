@@ -19,6 +19,7 @@ class TabCell: TabStripCell {
     static let kTitleInset: CGFloat = 10.0
     static let kFontSize: CGFloat = 14.0
     
+  private var grouped : Bool = false
     
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -66,6 +67,11 @@ class TabCell: TabStripCell {
     func setFaviconImage(_ image: UIImage?) {
         faviconView.image = image
     }
+  
+  func setGrouped(_ grouped : Bool) {
+    self.grouped = grouped
+    layer.borderColor = grouped ? UIColor.orange.cgColor :  UIColor.black.cgColor
+  }
     
     // MARK: - UICollectionViewCell
     
@@ -74,6 +80,7 @@ class TabCell: TabStripCell {
         faviconView.image = nil
         titleLabel.text = nil
         isSelected = false
+      grouped = false
     }
     
     
