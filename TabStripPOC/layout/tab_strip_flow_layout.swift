@@ -16,7 +16,7 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
   public var tabCellSize : CGSize = .zero
   private var indexPathsOfDeletingItems : [IndexPath] = []
   private var indexPathsOfInsertingItems : [IndexPath] = []
-    
+  
   weak var dataSource:
   UICollectionViewDiffableDataSource<TabStripViewController.Section, TabStripItem>?
   
@@ -79,13 +79,29 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
     
   }
   
-  override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    let attributes : UICollectionViewLayoutAttributes? = super.layoutAttributesForItem(at: indexPath)
+  override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
+    let attributes = super.layoutAttributesForElements(in: rect)!
+    for attribute in attributes {
+      let indexPath = attribute.indexPath
+      guard let cell : TabStripCell = (self.collectionView?.cellForItem(at: indexPath) as? TabStripCell) else { break }
+      if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
+        
+        let contentOffset = collectionView!.contentOffset
+        var origin = attribute.frame.origin
+        origin.x = contentOffset.x
+        attribute.zIndex = 1024
+        attribute.frame = CGRect(origin: origin, size: attribute.frame.size)
+      }
+    }
     return attributes
   }
   
+  override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    return true
+  }
+  
   // MARK: - Private
-
+  
   private func calculateTabCellSize() {
     guard let collectionView = self.collectionView, let snapshot = dataSource?.snapshot() else {return }
     
@@ -117,13 +133,13 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
   }
   
   // MARK: - Private
-
+  
   private func getGroupCellWidth(item: TabStripItem)  -> CGFloat {
     guard let groupItem = item as? TabGroupItem else {return 0}
     return TabGroupCell.estimatedWidth(groupItem.title)
   }
   // MARK: - Public
-
+  
   public func calculcateCellSize(indexPath: IndexPath) -> CGSize {
     guard let item = dataSource?.itemIdentifier(for: indexPath) else { return .zero}
     
@@ -134,6 +150,6 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
       return CGSize(width: getGroupCellWidth(item: item), height: TabStripConstants.TabItem.height)
     }
   }
-
+  
 }
 

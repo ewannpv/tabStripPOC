@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 
         var frame : CGRect = tabStripController.view.frame
         frame.origin.y += 20
-        frame.size.height = kTabStripItemHeight
+        frame.size.height = TabStripConstants.height
         tabStripController.view.frame = frame
         
         view.addSubview(tabStripController.view!)

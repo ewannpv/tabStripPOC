@@ -17,7 +17,6 @@
 		CB241AE32B0E37A400E7DC3F /* TabStripPOCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AE22B0E37A400E7DC3F /* TabStripPOCUITests.swift */; };
 		CB241AE52B0E37A400E7DC3F /* TabStripPOCUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AE42B0E37A400E7DC3F /* TabStripPOCUITestsLaunchTests.swift */; };
 		CB241AF22B0E37FD00E7DC3F /* tab_strip_view_controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AF12B0E37FD00E7DC3F /* tab_strip_view_controller.swift */; };
-		CB241AF42B0E382900E7DC3F /* tab_strip_compositional_layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AF32B0E382900E7DC3F /* tab_strip_compositional_layout.swift */; };
 		CB241AF62B0E384800E7DC3F /* tab_strip_consumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AF52B0E384800E7DC3F /* tab_strip_consumer.swift */; };
 		CB241AF82B0E387700E7DC3F /* tab_strip_cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AF72B0E387700E7DC3F /* tab_strip_cell.swift */; };
 		CB241AFA2B0E3C8500E7DC3F /* tab_switcher_item.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB241AF92B0E3C8500E7DC3F /* tab_switcher_item.swift */; };
@@ -66,7 +65,6 @@
 		CB241AE22B0E37A400E7DC3F /* TabStripPOCUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStripPOCUITests.swift; sourceTree = "<group>"; };
 		CB241AE42B0E37A400E7DC3F /* TabStripPOCUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStripPOCUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CB241AF12B0E37FD00E7DC3F /* tab_strip_view_controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tab_strip_view_controller.swift; sourceTree = "<group>"; };
-		CB241AF32B0E382900E7DC3F /* tab_strip_compositional_layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tab_strip_compositional_layout.swift; sourceTree = "<group>"; };
 		CB241AF52B0E384800E7DC3F /* tab_strip_consumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tab_strip_consumer.swift; sourceTree = "<group>"; };
 		CB241AF72B0E387700E7DC3F /* tab_strip_cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tab_strip_cell.swift; sourceTree = "<group>"; };
 		CB241AF92B0E3C8500E7DC3F /* tab_switcher_item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tab_switcher_item.swift; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 		CB6B08782B10F97000905982 /* layout */ = {
 			isa = PBXGroup;
 			children = (
-				CB241AF32B0E382900E7DC3F /* tab_strip_compositional_layout.swift */,
 				CB6B087C2B1491CD00905982 /* tab_strip_flow_layout.swift */,
 				CB6B087E2B14923000905982 /* tab_strip_constants.swift */,
 			);
@@ -355,7 +352,6 @@
 				CB241AC62B0E37A100E7DC3F /* ViewController.swift in Sources */,
 				CB241B092B0F915800E7DC3F /* tab_strip_new_tab_button.swift in Sources */,
 				CB241B002B0E466200E7DC3F /* tab_strip_mediator.swift in Sources */,
-				CB241AF42B0E382900E7DC3F /* tab_strip_compositional_layout.swift in Sources */,
 				CB241AC22B0E37A100E7DC3F /* AppDelegate.swift in Sources */,
 				CB6B08722B10F6EF00905982 /* tab_group_cell.swift in Sources */,
 				CB241B0B2B0F928100E7DC3F /* tab_strip_new_tab_button_delegate.swift in Sources */,

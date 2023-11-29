@@ -77,7 +77,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
       
       self.collectionView.trailingAnchor.constraint(equalTo: newTabButton.leadingAnchor),
       newTabButton.widthAnchor.constraint(equalToConstant: TabStripConstants.NewTabBtn.width),
-      newTabButton.heightAnchor.constraint(equalToConstant: kTabStripItemHeight),
+      newTabButton.heightAnchor.constraint(equalToConstant: TabStripConstants.height),
     ])
   }
   

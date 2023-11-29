@@ -10,7 +10,7 @@ import Foundation
 
 struct TabStripConstants {
     static let fontSize: CGFloat = 14.0
-
+    static let height :CGFloat = 39
     struct TabItem {
         static let height :CGFloat = 39
         static let minWidth :CGFloat = 80
