@@ -94,24 +94,22 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
     layout.needUpdate = true
     diffableDataSource?.apply(snapshot, animatingDifferences: false)
     layout.needUpdate = false
-    guard let selectedItem = selectedItem, let diffableDataSource = diffableDataSource else {
-      return
-    }
-    let indexPath = diffableDataSource.indexPath(for: selectedItem)
-    collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+    selectItem(selectedItem)
   }
   
   func selectItem(_ item: TabStripItem?) {
+    guard let item = item, let diffableDataSource = diffableDataSource else {
+      return
+    }
+    
     if let indexPaths = collectionView.indexPathsForSelectedItems {
       for indexPath in indexPaths {
         collectionView.deselectItem(at: indexPath, animated: true)
       }
     }
-    guard let item = item, let diffableDataSource = diffableDataSource else {
-      return
-    }
+
     let indexPath = diffableDataSource.indexPath(for: item)
-    collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
+    collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [UICollectionView.ScrollPosition.centeredHorizontally])
   }
   
   func reloadItem(_ item: TabStripItem?) {

@@ -28,7 +28,7 @@ class TabStripMediator: TabStripMutator {
   func closeItem(_ item: TabStripItem) {
     if let index = items?.firstIndex(of: item) {
       items?.remove(at: index)
-      consumer?.populate(items: items, selectedItem: items?.first)
+      consumer?.populate(items: items, selectedItem: nil)
     }
   }
   

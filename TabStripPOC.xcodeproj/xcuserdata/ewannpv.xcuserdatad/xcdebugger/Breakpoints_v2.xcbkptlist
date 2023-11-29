@@ -23,64 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CC7A8DD0-EEC4-4F15-815D-8FC3DA7DF848"
+            uuid = "B0631F1A-A2B3-4E19-93D8-450CE475BB4D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TabStripPOC/controller/tab_strip_view_controller.swift"
+            filePath = "TabStripPOC/view/tab_cell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "populate(items:selectedItem:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CC7A8DD0-EEC4-4F15-815D-8FC3DA7DF848 - 80448444ad54f0d7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TabStripPOC.TabStripViewController.populate(items: Swift.Optional&lt;Swift.Array&lt;TabStripPOC.TabStripItem&gt;&gt;, selectedItem: Swift.Optional&lt;TabStripPOC.TabStripItem&gt;) -&gt; ()"
-                  moduleName = "TabStripPOC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ewannpv/tabStripPOC/TabStripPOC/controller/tab_strip_view_controller.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "508">
-               </Location>
-               <Location
-                  uuid = "CC7A8DD0-EEC4-4F15-815D-8FC3DA7DF848 - 80448444ad54f0d7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TabStripPOC.TabStripViewController.populate(items: Swift.Optional&lt;Swift.Array&lt;TabStripPOC.TabStripItem&gt;&gt;, selectedItem: Swift.Optional&lt;TabStripPOC.TabStripItem&gt;) -&gt; ()"
-                  moduleName = "TabStripPOC"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ewannpv/tabStripPOC/TabStripPOC/controller/tab_strip_view_controller.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "512">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "13F40F91-987E-4555-8972-6EB6E751DEAA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TabStripPOC/layout/tab_strip_flow_layout.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "prepare()"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "prepareForReuse()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

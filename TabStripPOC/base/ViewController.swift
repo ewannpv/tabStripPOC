@@ -16,7 +16,6 @@ class ViewController: UIViewController {
         
         tabStripMediator.consumer = tabStripController
         tabStripController.mutator = tabStripMediator
-        tabStripController.newTabButtonTapped()
 
         var frame : CGRect = tabStripController.view.frame
         frame.origin.y += 20

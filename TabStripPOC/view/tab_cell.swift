@@ -80,7 +80,7 @@ class TabCell: TabStripCell {
         faviconView.image = nil
         titleLabel.text = nil
         isSelected = false
-      grouped = false
+        grouped = false
     }
     
     
