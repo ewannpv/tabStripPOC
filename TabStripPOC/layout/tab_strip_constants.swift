@@ -17,10 +17,9 @@ struct TabStripConstants {
         static let maxWidth :CGFloat = 150
         static let horizontalSpacing: CGFloat = 6
         static let cornderRadius: CGFloat = 4
-
+        
         static let previewCornderRadius: CGFloat = 12
     }
-    
     
     struct groupItem {
         static let titleInset: CGFloat = 6.0

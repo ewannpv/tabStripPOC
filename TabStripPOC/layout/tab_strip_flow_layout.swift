@@ -12,144 +12,157 @@ import UIKit
 
 /// Layout used for the TabStrip.
 class TabStripFlowLayout: UICollectionViewFlowLayout {
-  public var needUpdate : Bool = true
-  public var tabCellSize : CGSize = .zero
-  private var indexPathsOfDeletingItems : [IndexPath] = []
-  private var indexPathsOfInsertingItems : [IndexPath] = []
-  
-  weak var dataSource:
-  UICollectionViewDiffableDataSource<TabStripViewController.Section, TabStripItem>?
-  
-  override init() {
-    super.init()
-    scrollDirection = .horizontal
-    minimumInteritemSpacing = TabStripConstants.TabItem.horizontalSpacing
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  // MARK: - UICollectionViewLayout
-  
-  override func prepare() {
-    if (needUpdate){
-      calculateTabCellSize()
-    }
-    super.prepare()
-  }
-  
-  
-  override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
-    super.prepare(forCollectionViewUpdates: updateItems)
+    public var needUpdate : Bool = true
+    public var tabCellSize : CGSize = .zero
+    private var indexPathsOfDeletingItems : [IndexPath] = []
+    private var indexPathsOfInsertingItems : [IndexPath] = []
     
-    indexPathsOfDeletingItems = []
-    indexPathsOfInsertingItems = []
-    for item in updateItems {
-      switch item.updateAction {
-      case .insert:
-        indexPathsOfInsertingItems.append(item.indexPathAfterUpdate!)
-        break
-      case .delete:
-        indexPathsOfDeletingItems.append(item.indexPathBeforeUpdate!)
-        break
-      default:
-        break
-      }
-    }
-  }
-  
-  override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-    guard let attributes: UICollectionViewLayoutAttributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else {return nil }
+    weak var dataSource:
+    UICollectionViewDiffableDataSource<TabStripViewController.Section, TabStripItem>?
     
-    if (!indexPathsOfInsertingItems.contains(itemIndexPath)){
-      return attributes;
+    override init() {
+        super.init()
+        scrollDirection = .horizontal
+        minimumInteritemSpacing = TabStripConstants.TabItem.horizontalSpacing
     }
-    // TODO(crbug.com/820410) : Polish the animation, and put constants where they
-    // belong.
-    // Cells being inserted start faded out, scaled down, and drop downwards
-    // slightly.
-    attributes.alpha = 0.0;
-    var transform : CGAffineTransform =
-    CGAffineTransformScale(attributes.transform, /*sx=*/0.9, /*sy=*/0.9);
-    transform = CGAffineTransformTranslate(transform, /*tx=*/0,
-                                           /*ty=*/attributes.size.height * 0.1);
-    attributes.transform = transform;
-    return attributes;
     
-  }
-  
-  override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
-    let attributes = super.layoutAttributesForElements(in: rect)!
-    for attribute in attributes {
-      let indexPath = attribute.indexPath
-      guard let cell : TabStripCell = (self.collectionView?.cellForItem(at: indexPath) as? TabStripCell) else { break }
-      if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - UICollectionViewLayout
+    
+    override func prepare() {
+        if (needUpdate){
+            calculateTabCellSize()
+        }
+        super.prepare()
+    }
+    
+    
+    override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+        super.prepare(forCollectionViewUpdates: updateItems)
         
-        let contentOffset = collectionView!.contentOffset
-        var origin = attribute.frame.origin
-        origin.x = contentOffset.x
-        attribute.zIndex = 1024
-        attribute.frame = CGRect(origin: origin, size: attribute.frame.size)
-      }
-    }
-    return attributes
-  }
-  
-  override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-    return true
-  }
-  
-  // MARK: - Private
-  
-  private func calculateTabCellSize() {
-    guard let collectionView = self.collectionView, let snapshot = dataSource?.snapshot() else {return }
-    
-    var groupCellWidthSum : CGFloat = 0
-    var tabCellCount : CGFloat = 0
-    let cellCount : CGFloat = CGFloat(snapshot.itemIdentifiers.count)
-    
-    if (cellCount == 0) {
-      return;
+        indexPathsOfDeletingItems = []
+        indexPathsOfInsertingItems = []
+        for item in updateItems {
+            switch item.updateAction {
+            case .insert:
+                indexPathsOfInsertingItems.append(item.indexPathAfterUpdate!)
+                break
+            case .delete:
+                indexPathsOfDeletingItems.append(item.indexPathBeforeUpdate!)
+                break
+            default:
+                break
+            }
+        }
     }
     
-    for item in snapshot.itemIdentifiers {
-      if (item.type == TabStripItemType.TabGroupItem){
-        groupCellWidthSum += getGroupCellWidth(item: item)
-      } else {
-        tabCellCount += 1
-      }
+    override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let attributes: UICollectionViewLayoutAttributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) else {return nil }
+        
+        if (!indexPathsOfInsertingItems.contains(itemIndexPath)){
+            return attributes;
+        }
+        // TODO(crbug.com/820410) : Polish the animation, and put constants where they
+        // belong.
+        // Cells being inserted start faded out, scaled down, and drop downwards
+        // slightly.
+        attributes.alpha = 0.0;
+        var transform : CGAffineTransform =
+        CGAffineTransformScale(attributes.transform, /*sx=*/0.9, /*sy=*/0.9);
+        transform = CGAffineTransformTranslate(transform, /*tx=*/0,
+                                               /*ty=*/attributes.size.height * 0.1);
+        attributes.transform = transform;
+        return attributes;
+        
     }
     
-    let collectionViewWidth: CGFloat = CGRectGetWidth(collectionView.bounds);
-    let itemSpacingSum: CGFloat = minimumInteritemSpacing * (cellCount - 1);
-    
-    var itemWidth: CGFloat =
-    (collectionViewWidth - itemSpacingSum - groupCellWidthSum) / tabCellCount;
-    itemWidth = max(itemWidth, TabStripConstants.TabItem.minWidth)
-    itemWidth = min(itemWidth, TabStripConstants.TabItem.maxWidth)
-    
-    tabCellSize = CGSize(width: itemWidth, height: TabStripConstants.TabItem.height)
-  }
-  
-  // MARK: - Private
-  
-  private func getGroupCellWidth(item: TabStripItem)  -> CGFloat {
-    guard let groupItem = item as? TabGroupItem else {return 0}
-    return TabGroupCell.estimatedWidth(groupItem.title)
-  }
-  // MARK: - Public
-  
-  public func calculcateCellSize(indexPath: IndexPath) -> CGSize {
-    guard let item = dataSource?.itemIdentifier(for: indexPath) else { return .zero}
-    
-    switch item.type {
-    case TabStripItemType.TabSwitcherItem:
-      return tabCellSize
-    case TabStripItemType.TabGroupItem:
-      return CGSize(width: getGroupCellWidth(item: item), height: TabStripConstants.TabItem.height)
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
+        let attributes = super.layoutAttributesForElements(in: rect)!
+        for attribute in attributes {
+            let indexPath = attribute.indexPath
+            guard let cell : TabStripCell = (self.collectionView?.cellForItem(at: indexPath) as? TabStripCell) else { break }
+            if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
+                
+                let contentOffset = collectionView!.contentOffset
+                
+                var origin = attribute.frame.origin
+                attribute.zIndex = 1024
+
+                let maxOrigin = (collectionView?.bounds.size.width ?? 0) - attribute.frame.size.width
+//                print("origin \(origin.x)")
+//                print("offset \(contentOffset.x)")
+                print("collectionViewWidth \(maxOrigin)")
+                print("origin + offset \(origin.x + contentOffset.x)")
+
+                if ((origin.x + contentOffset.x) < maxOrigin) {
+                    origin.x = max(origin.x, contentOffset.x)
+                } else {
+                    origin.x =  min(origin.x, contentOffset.x + maxOrigin)
+                }
+                attribute.frame = CGRect(origin: origin, size: attribute.frame.size)
+
+            }
+        }
+        return attributes
     }
-  }
-  
+    
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return true
+    }
+    
+    // MARK: - Private
+    
+    private func calculateTabCellSize() {
+        guard let collectionView = self.collectionView, let snapshot = dataSource?.snapshot() else {return }
+        
+        var groupCellWidthSum : CGFloat = 0
+        var tabCellCount : CGFloat = 0
+        let cellCount : CGFloat = CGFloat(snapshot.itemIdentifiers.count)
+        
+        if (cellCount == 0) {
+            return;
+        }
+        
+        for item in snapshot.itemIdentifiers {
+            if (item.type == TabStripItemType.TabGroupItem){
+                groupCellWidthSum += getGroupCellWidth(item: item)
+            } else {
+                tabCellCount += 1
+            }
+        }
+        
+        let collectionViewWidth: CGFloat = CGRectGetWidth(collectionView.bounds);
+        let itemSpacingSum: CGFloat = minimumInteritemSpacing * (cellCount - 1);
+        
+        var itemWidth: CGFloat =
+        (collectionViewWidth - itemSpacingSum - groupCellWidthSum) / tabCellCount;
+        itemWidth = max(itemWidth, TabStripConstants.TabItem.minWidth)
+        itemWidth = min(itemWidth, TabStripConstants.TabItem.maxWidth)
+        
+        tabCellSize = CGSize(width: itemWidth, height: TabStripConstants.TabItem.height)
+    }
+    
+    // MARK: - Private
+    
+    private func getGroupCellWidth(item: TabStripItem)  -> CGFloat {
+        guard let groupItem = item as? TabGroupItem else {return 0}
+        return TabGroupCell.estimatedWidth(groupItem.title)
+    }
+    // MARK: - Public
+    
+    public func calculcateCellSize(indexPath: IndexPath) -> CGSize {
+        guard let item = dataSource?.itemIdentifier(for: indexPath) else { return .zero}
+        
+        switch item.type {
+        case TabStripItemType.TabSwitcherItem:
+            return tabCellSize
+        case TabStripItemType.TabGroupItem:
+            return CGSize(width: getGroupCellWidth(item: item), height: TabStripConstants.TabItem.height)
+        }
+    }
+    
 }
 
