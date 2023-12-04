@@ -14,6 +14,7 @@ import UIKit
 class TabStripFlowLayout: UICollectionViewFlowLayout {
     public var needUpdate : Bool = true
     public var tabCellSize : CGSize = .zero
+  public var selectedIndexPath: IndexPath?
     private var indexPathsOfDeletingItems : [IndexPath] = []
     private var indexPathsOfInsertingItems : [IndexPath] = []
     
@@ -111,10 +112,12 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let superLayoutAttributes = super.layoutAttributesForElements(in: rect) else { return nil }
-
-        let computedAttributes = superLayoutAttributes.compactMap { layoutAttribute in
-          layoutAttributesForItem(at: layoutAttribute.indexPath)
+        guard var computedAttributes = super.layoutAttributesForElements(in: rect) else { return nil }
+        if(selectedIndexPath != nil) {
+          let attr = layoutAttributesForItem(at: selectedIndexPath!)
+          if(attr != nil) {
+            computedAttributes.append(attr!)
+          }
         }
         return computedAttributes
     }

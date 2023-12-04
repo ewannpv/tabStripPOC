@@ -113,6 +113,7 @@ class TabStripViewController: UIViewController, TabStripCellDelegate,TabStripCon
         }
         
         let indexPath = diffableDataSource.indexPath(for: item)
+      layout.selectedIndexPath = indexPath
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: [UICollectionView.ScrollPosition.centeredHorizontally])
     }
     
