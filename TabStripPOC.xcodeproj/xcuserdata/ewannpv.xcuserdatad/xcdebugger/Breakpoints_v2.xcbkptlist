@@ -23,22 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BF27AD0A-2448-4B75-A93E-6C66AF1E261F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TabStripPOC/layout/tab_strip_flow_layout.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "initialLayoutAttributesForAppearingItem(at:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5416F516-F4B8-40BB-B742-291810D17B99"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -46,8 +30,8 @@
             filePath = "TabStripPOC/view/tab_cell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "isHidden"
             landmarkType = "24">
             <Locations>
@@ -64,10 +48,10 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "85"
                   endingLineNumber = "85"
-                  offsetFromSymbolStart = "268">
+                  offsetFromSymbolStart = "92">
                </Location>
                <Location
-                  uuid = "5416F516-F4B8-40BB-B742-291810D17B99 - bcad080258f4cb44"
+                  uuid = "5416F516-F4B8-40BB-B742-291810D17B99 - bcad080258f4ca86"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -77,8 +61,8 @@
                   urlString = "file:///Users/ewannpv/Desktop/TabStripPOC/TabStripPOC/view/tab_cell.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "87"
-                  endingLineNumber = "87"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
                   offsetFromSymbolStart = "268">
                </Location>
             </Locations>

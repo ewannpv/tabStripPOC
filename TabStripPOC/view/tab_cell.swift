@@ -23,9 +23,7 @@ class TabCell: TabStripCell {
     
     override init(frame: CGRect) {
         super.init(frame:frame)
-        
-        isHidden = false
-
+        isSelected = false
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
         layer.borderWidth = 1;
@@ -92,13 +90,9 @@ class TabCell: TabStripCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        if (isSelected){
-            print("selected cell called prepareForReuse:")
-        }
         isHidden = false
         faviconView.image = nil
         titleLabel.text = nil
-        isSelected = false
         grouped = false
     }
     

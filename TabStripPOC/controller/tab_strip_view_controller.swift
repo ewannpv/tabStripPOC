@@ -296,6 +296,7 @@ extension TabStripViewController : UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
+        
         return layout.calculcateCellSize(indexPath: indexPath)
     }
     
