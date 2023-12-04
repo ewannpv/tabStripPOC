@@ -24,6 +24,8 @@ class TabCell: TabStripCell {
     override init(frame: CGRect) {
         super.init(frame:frame)
         
+        isHidden = false
+
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
         layer.borderWidth = 1;
@@ -75,8 +77,25 @@ class TabCell: TabStripCell {
     
     // MARK: - UICollectionViewCell
     
+    
+    override var isHidden: Bool {
+            get {
+                super.isHidden  && !isSelected
+            }
+            set {
+                if (isSelected && newValue){
+                    print("set hidden \(newValue)")
+                }
+                super.isHidden = newValue && !isSelected
+            }
+        }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
+        if (isSelected){
+            print("selected cell called prepareForReuse:")
+        }
+        isHidden = false
         faviconView.image = nil
         titleLabel.text = nil
         isSelected = false

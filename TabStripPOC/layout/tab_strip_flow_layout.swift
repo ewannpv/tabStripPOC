@@ -79,38 +79,48 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
         
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes] {
-        let attributes = super.layoutAttributesForElements(in: rect)!
-        for attribute in attributes {
-            let indexPath = attribute.indexPath
-            guard let cell : TabStripCell = (self.collectionView?.cellForItem(at: indexPath) as? TabStripCell) else { break }
-            if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
-                
-                let contentOffset = collectionView!.contentOffset
-                
-                var origin = attribute.frame.origin
-                attribute.zIndex = 1024
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let layoutAttributes = super.layoutAttributesForItem(at: indexPath) else { return nil }
+        guard let collectionView = collectionView else { return nil }
 
-                let maxOrigin = (collectionView?.bounds.size.width ?? 0) - attribute.frame.size.width
-//                print("origin \(origin.x)")
-//                print("offset \(contentOffset.x)")
-                print("collectionViewWidth \(maxOrigin)")
-                print("origin + offset \(origin.x + contentOffset.x)")
+        guard let cell : TabStripCell = (collectionView.cellForItem(at: indexPath) as? TabStripCell) else { return  layoutAttributes }
+        if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
+            cell.isHidden = false
+            let contentOffset = collectionView.contentOffset
+    
+            var origin = layoutAttributes.frame.origin
+            layoutAttributes.zIndex = 100
+            // print("base frame \(layoutAttributes.frame)")
+            
+            let maxOrigin = (collectionView.bounds.size.width) - layoutAttributes.frame.size.width
+            
+            //print("collectionViewWidth \(maxOrigin), origin \(origin.x) offset \(contentOffset.x)")
+            origin.x = max(origin.x, contentOffset.x)
+            origin.x =  min(origin.x, contentOffset.x + maxOrigin)
+            
+            
+            layoutAttributes.frame = CGRect(origin: origin, size: layoutAttributes.frame.size)
+            print("updated frame \(layoutAttributes.frame)")
+            print("selected cell  \(cell) \(cell.frame)")
+            print("visible cell count \(collectionView.visibleCells.count)")
 
-                if ((origin.x + contentOffset.x) < maxOrigin) {
-                    origin.x = max(origin.x, contentOffset.x)
-                } else {
-                    origin.x =  min(origin.x, contentOffset.x + maxOrigin)
-                }
-                attribute.frame = CGRect(origin: origin, size: attribute.frame.size)
-
-            }
+            // print("updated attribute \(layoutAttributes)")
         }
-        return attributes
+        
+        return layoutAttributes
+    }
+
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let superLayoutAttributes = super.layoutAttributesForElements(in: rect) else { return nil }
+
+        let computedAttributes = superLayoutAttributes.compactMap { layoutAttribute in
+          layoutAttributesForItem(at: layoutAttribute.indexPath)
+        }
+        return computedAttributes
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+       return true
     }
     
     // MARK: - Private
