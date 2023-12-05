@@ -15,7 +15,7 @@ struct TabStripConstants {
         static let height :CGFloat = 39
         static let minWidth :CGFloat = 80
         static let maxWidth :CGFloat = 150
-        static let horizontalSpacing: CGFloat = 6
+        static let horizontalSpacing: CGFloat = 0
         static let cornderRadius: CGFloat = 4
         
         static let previewCornderRadius: CGFloat = 12

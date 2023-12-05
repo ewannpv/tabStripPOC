@@ -25,6 +25,7 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
         super.init()
         scrollDirection = .horizontal
         minimumInteritemSpacing = TabStripConstants.TabItem.horizontalSpacing
+        minimumLineSpacing = 0
     }
     
     required init?(coder: NSCoder) {
@@ -85,27 +86,39 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return nil }
 
         guard let cell : TabStripCell = (collectionView.cellForItem(at: indexPath) as? TabStripCell) else { return  layoutAttributes }
+        print("index \(indexPath.row)")
         if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
             cell.isHidden = false
             let contentOffset = collectionView.contentOffset
     
             var origin = layoutAttributes.frame.origin
             layoutAttributes.zIndex = 100
-            // print("base frame \(layoutAttributes.frame)")
             
             let maxOrigin = (collectionView.bounds.size.width) - layoutAttributes.frame.size.width
-            
-            //print("collectionViewWidth \(maxOrigin), origin \(origin.x) offset \(contentOffset.x)")
+        
             origin.x = max(origin.x, contentOffset.x)
             origin.x =  min(origin.x, contentOffset.x + maxOrigin)
-            
-            
+    
             layoutAttributes.frame = CGRect(origin: origin, size: layoutAttributes.frame.size)
-            print("updated frame \(layoutAttributes.frame)")
-            print("selected cell  \(cell) \(cell.frame)")
-            print("visible cell count \(collectionView.visibleCells.count)")
+        } else {
+            var frame = layoutAttributes.frame
+            let currentWidth = frame.width
+            let contentOffset = collectionView.contentOffset
 
-            // print("updated attribute \(layoutAttributes)")
+            if (frame.origin.x  < contentOffset.x && frame.origin.x + currentWidth > contentOffset.x) {
+                let contentOffset = collectionView.contentOffset
+
+                
+                frame.origin.x = max(frame.origin.x, contentOffset.x)
+                frame.size.width = frame.size.width - (abs(frame.origin.x - layoutAttributes.frame.origin.x))
+            }
+            let collectionViewSize = (collectionView.bounds.size.width)
+
+            if (frame.origin.x < collectionViewSize + contentOffset.x  && frame.origin.x + layoutAttributes.frame.size.width > collectionViewSize + contentOffset.x) {
+               frame.size.width = abs(frame.origin.x - (collectionViewSize + contentOffset.x))
+            }
+
+            layoutAttributes.frame = frame
         }
         
         return layoutAttributes
@@ -113,6 +126,11 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         guard var computedAttributes = super.layoutAttributesForElements(in: rect) else { return nil }
+        
+        computedAttributes = computedAttributes.compactMap { layoutAttribute in
+            layoutAttributesForItem(at: layoutAttribute.indexPath)
+        }
+        
         if(selectedIndexPath != nil) {
           let attr = layoutAttributesForItem(at: selectedIndexPath!)
           if(attr != nil) {
