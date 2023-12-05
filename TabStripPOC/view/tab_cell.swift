@@ -27,6 +27,7 @@ class TabCell: TabStripCell {
         layer.borderColor = UIColor.black.cgColor
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
         layer.borderWidth = 1;
+        clipsToBounds = true
         
         configureFaviconView()
         configureCloseButton()
@@ -74,19 +75,6 @@ class TabCell: TabStripCell {
   }
     
     // MARK: - UICollectionViewCell
-    
-    
-    override var isHidden: Bool {
-            get {
-                super.isHidden  && !isSelected
-            }
-            set {
-                if (isSelected && newValue){
-                    print("set hidden \(newValue)")
-                }
-                super.isHidden = newValue && !isSelected
-            }
-        }
     
     override func prepareForReuse() {
         super.prepareForReuse()

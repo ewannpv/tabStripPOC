@@ -86,7 +86,6 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return nil }
 
         guard let cell : TabStripCell = (collectionView.cellForItem(at: indexPath) as? TabStripCell) else { return  layoutAttributes }
-        print("index \(indexPath.row)")
         if (cell.type == TabStripItemType.TabSwitcherItem && cell.isSelected) {
             cell.isHidden = false
             let contentOffset = collectionView.contentOffset
@@ -110,12 +109,12 @@ class TabStripFlowLayout: UICollectionViewFlowLayout {
 
                 
                 frame.origin.x = max(frame.origin.x, contentOffset.x)
-                frame.size.width = frame.size.width - (abs(frame.origin.x - layoutAttributes.frame.origin.x))
+                frame.size.width = min(frame.size.width - (abs(frame.origin.x - layoutAttributes.frame.origin.x)), frame.size.width)
             }
             let collectionViewSize = (collectionView.bounds.size.width)
 
             if (frame.origin.x < collectionViewSize + contentOffset.x  && frame.origin.x + layoutAttributes.frame.size.width > collectionViewSize + contentOffset.x) {
-               frame.size.width = abs(frame.origin.x - (collectionViewSize + contentOffset.x))
+               frame.size.width =  min(abs(frame.origin.x - (collectionViewSize + contentOffset.x)), frame.size.width)
             }
 
             layoutAttributes.frame = frame

@@ -10,23 +10,40 @@ import UIKit
 class TabGroupCell: TabStripCell {
   
     private let titleLabel : UILabel = UILabel()
-        
+    private let roundedBackgroundView : UIView = UIView(frame: .zero)
+    
     override init(frame: CGRect) {
         super.init(frame:frame)
         type = TabStripItemType.TabGroupItem
         layer.borderColor = UIColor.orange.cgColor
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
         layer.borderWidth = 1;
-        
+        layer.masksToBounds = true
+        clipsToBounds = true
         configureTitleLabel()
+        configureRoundedBackgroundView()
         
         let contentView = self.contentView
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(roundedBackgroundView)
+        roundedBackgroundView.addSubview(titleLabel)
+        
+        let defaultHeightConstraint : NSLayoutConstraint =
+        roundedBackgroundView.heightAnchor .constraint(equalTo: contentView.heightAnchor, constant: -2 * TabStripConstants.groupItem.backgroundTiteInset)
+        defaultHeightConstraint.priority = .defaultLow
+        
+        let resizeHeighConstraint : NSLayoutConstraint  =             roundedBackgroundView.heightAnchor.constraint(lessThanOrEqualTo:roundedBackgroundView.widthAnchor)
+        resizeHeighConstraint.priority  = .defaultHigh
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: TabStripConstants.groupItem.titleInset),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -TabStripConstants.groupItem.titleInset),
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            roundedBackgroundView.leadingAnchor.constraint(greaterThanOrEqualTo:contentView.leadingAnchor, constant: TabStripConstants.groupItem.backgroundTiteInset),
+            roundedBackgroundView.trailingAnchor.constraint(lessThanOrEqualTo:contentView.trailingAnchor, constant: -TabStripConstants.groupItem.backgroundTiteInset),
+            defaultHeightConstraint,
+            resizeHeighConstraint,
+            roundedBackgroundView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            titleLabel.leadingAnchor.constraint(equalTo: roundedBackgroundView.leadingAnchor, constant: TabStripConstants.groupItem.titleInset),
+            titleLabel.trailingAnchor.constraint(equalTo: roundedBackgroundView.trailingAnchor, constant: -TabStripConstants.groupItem.titleInset),
+            titleLabel.centerYAnchor.constraint(equalTo: roundedBackgroundView.centerYAnchor),
         ])
     }
     
@@ -48,6 +65,12 @@ class TabGroupCell: TabStripCell {
     
     // MARK: - Private
     
+    private func configureRoundedBackgroundView() {
+        roundedBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        roundedBackgroundView.backgroundColor = UIColor.orange
+        roundedBackgroundView.layer.cornerRadius = 8.0
+
+    }
     private func configureTitleLabel() {
         titleLabel.textColor = UIColor.black
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +83,7 @@ class TabGroupCell: TabStripCell {
       let label = UILabel(frame: .zero)
       label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
       label.text = text
-    return label.sizeThatFits(.zero).width + (2 * TabStripConstants.groupItem.titleInset)
+      return label.sizeThatFits(.zero).width + (2 * (TabStripConstants.groupItem.titleInset + TabStripConstants.groupItem.backgroundTiteInset))
   }
   
 }

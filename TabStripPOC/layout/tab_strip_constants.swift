@@ -22,7 +22,8 @@ struct TabStripConstants {
     }
     
     struct groupItem {
-        static let titleInset: CGFloat = 6.0
+        static let titleInset: CGFloat = 2.0
+        static let backgroundTiteInset = 4.0
     }
     
     struct NewTabBtn {

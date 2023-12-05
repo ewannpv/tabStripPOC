@@ -35,9 +35,6 @@ class TabStripCell: UICollectionViewCell {
     // MARK: - UICollectionViewCell
 
     override func prepareForReuse() {
-        if (isSelected){
-            print("selected cell called prepareForReuse:")
-        }
         isSelected = false
         super.prepareForReuse()
         layer.cornerRadius = TabStripConstants.TabItem.cornderRadius
